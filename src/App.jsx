@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 
 /* =========================
-   QUIZ (6 perguntas)
+   1) QUIZ (6 perguntas)
 ========================= */
+
 const questions = [
   {
     question:
@@ -68,11 +69,10 @@ const questions = [
 ];
 
 /* =========================
-   OFERTAS (3 cards)
-   - card3 é MAIS POPULAR
-   - imagens card1/card2/card3 em 9:16
-   - topo da página: somente /planilha.png (sem mockup)
+   2) OFERTAS (Kiwify links)
+   OBS: imagens 9:16 (card1/2/3)
 ========================= */
+
 const offers = [
   {
     id: "card1",
@@ -80,7 +80,7 @@ const offers = [
     subtitle: "Acesso vitalício",
     oldPrice: "R$97,00",
     newPrice: "R$27,00",
-    url: "https://nobux.mycartpanda.com/checkout/207386789:1",
+    url: "https://pay.kiwify.com.br/T2t4PBq",
     image: "/card1.png",
     bullets: [
       "Criada para ajudar você a organizar suas finanças de forma simples, rápida e prática. Controle gastos, acompanhe entradas, metas e pagamentos em um só lugar. Tenha clareza do seu dinheiro, elimine desperdícios e assuma o controle da sua vida financeira começando hoje.",
@@ -93,7 +93,7 @@ const offers = [
     subtitle: "Acesso vitalício",
     oldPrice: "R$127,00",
     newPrice: "R$47,00",
-    url: "https://nobux.mycartpanda.com/checkout/207386845:1",
+    url: "https://pay.kiwify.com.br/KEpAvGm",
     image: "/card2.png",
     bullets: [
       "Acesso ao sistema Parcelado Nunca Mais: veja quanto do seu dinheiro já está comprometido antes de parcelar qualquer compra.",
@@ -108,11 +108,10 @@ const offers = [
     subtitle: "Acesso vitalício",
     oldPrice: "R$497,00",
     newPrice: "R$97,00",
-    url: "https://nobux.mycartpanda.com/checkout/207386927:1",
+    url: "https://pay.kiwify.com.br/eSTSn8r",
     image: "/card3.png",
     bullets: [
-      // ✅ NOVO: primeiro bullet (SUporte humanizado)
-      "Suporte prioritário humanizado no WhatsApp (pegamos na sua mão e te ajudamos até você ver as coisas acontecendo).",
+      "Suporte prioritário humanizado no whatsapp (pegamos na sua mão e te ajudamos até você ver as coisas acontecendo)",
       "Planilha Vida Sem Dívidas, criada para ajudar você a organizar suas finanças de forma simples, rápida e prática.",
       "ANTI-IMPULSO: antes de gastar, pergunte para a IA. Funciona direto pelo ChatGPT e te ajuda a decidir melhor com seu dinheiro.",
       "MÉTODO S.O.M: um sistema com direção clara para pessoas comuns saírem do caos e começarem a avançar de verdade.",
@@ -123,9 +122,10 @@ const offers = [
 ];
 
 /* =========================
-   DEPOIMENTOS (avatares JPG)
-   - coloque na pasta public: maria.jpg, breno.jpg, paulo.jpg
+   3) DEPOIMENTOS (JPG)
+   (coloque na pasta public: maria.jpg, breno.jpg, paulo.jpg)
 ========================= */
+
 const testimonials = [
   {
     text:
@@ -151,8 +151,9 @@ const testimonials = [
 ];
 
 /* =========================
-   CONTADOR (10 min)
+   4) CONTADOR (10 min)
 ========================= */
+
 function useCountdown(startSeconds = 600) {
   const [secondsLeft, setSecondsLeft] = useState(startSeconds);
 
@@ -167,6 +168,10 @@ function useCountdown(startSeconds = 600) {
   const ss = String(secondsLeft % 60).padStart(2, "0");
   return `${mm}:${ss}`;
 }
+
+/* =========================
+   APP
+========================= */
 
 export default function App() {
   const [stage, setStage] = useState("hook"); // hook | quiz | offers
@@ -191,23 +196,14 @@ export default function App() {
     else setStage("offers");
   }
 
-  /* =========================
-     TELA 1 (Entrada) com MOCKUP
-     - imagem public/mockup.png
-  ========================= */
+  /* ===== TELA 1: ENTRADA com MOCKUP ===== */
   if (stage === "hook") {
     return (
       <div style={styles.page}>
         <div style={styles.card}>
           <div style={styles.mockWrap}>
-            <img
-              src="/mockup.png"
-              alt="Mockup da planilha"
-              style={styles.mockImg}
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
-            />
+            {/* coloque mockup.png dentro de /public */}
+            <img src="/mockup.png" alt="Mockup da planilha" style={styles.mockImg} />
           </div>
 
           <h1 style={styles.title}>Responda 6 perguntas rápidas 💰</h1>
@@ -228,9 +224,7 @@ export default function App() {
     );
   }
 
-  /* =========================
-     QUIZ
-  ========================= */
+  /* ===== QUIZ ===== */
   if (stage === "quiz") {
     const q = questions[current];
 
@@ -276,15 +270,13 @@ export default function App() {
 }
 
 /* =========================
-   PÁGINA DE OFERTAS
-   - contador 10 minutos
-   - topo: SOMENTE planilha (planilha.png)
-   - cards embaixo
-   - garantia + depoimentos com JPG
+   PÁGINA FINAL (OFERTAS)
 ========================= */
+
 function OffersPage({ totalScore, maxScore }) {
   const time = useCountdown(10 * 60);
 
+  // diagnóstico (resultado)
   const perfil =
     totalScore <= 8
       ? "Seu dinheiro provavelmente está escapando sem você perceber 💸"
@@ -302,20 +294,8 @@ function OffersPage({ totalScore, maxScore }) {
           </div>
         </div>
 
-        {/* Topo: Planilha (somente imagem) */}
-        <div style={offersStyles.heroSoloWrap}>
-          <img
-            src="/planilha.png"
-            alt="Planilha"
-            style={offersStyles.heroSoloImg}
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
-          />
-        </div>
-
-        {/* Cabeçalho */}
-        <div style={{ textAlign: "center", marginTop: 14 }}>
+        {/* Título + Diagnóstico */}
+        <div style={{ textAlign: "center", marginTop: 8 }}>
           <div style={offersStyles.headerTag}>ESCOLHA SUA MELHOR OPÇÃO</div>
           <div style={offersStyles.headerTitle}>Seu diagnóstico está pronto ✅</div>
           <div style={offersStyles.headerSub}>
@@ -326,6 +306,12 @@ function OffersPage({ totalScore, maxScore }) {
           </div>
         </div>
 
+        {/* ✅ imagem da planilha (somente a planilha, sem mockup “caixa”) */}
+        <div style={offersStyles.planilhaOnlyWrap}>
+          {/* coloque planilha.png dentro de /public */}
+          <img src="/planilha.png" alt="Planilha" style={offersStyles.planilhaOnlyImg} />
+        </div>
+
         {/* Cards */}
         <div style={offersStyles.grid}>
           {offers.map((o, idx) => (
@@ -334,14 +320,8 @@ function OffersPage({ totalScore, maxScore }) {
         </div>
 
         {/* Garantia */}
-        <img
-          src="/garantia.png"
-          alt="Garantia 30 dias"
-          style={offersStyles.garantia}
-          onError={(e) => {
-            e.currentTarget.style.display = "none";
-          }}
-        />
+        {/* coloque garantia.png dentro de /public */}
+        <img src="/garantia.png" alt="Garantia 30 dias" style={offersStyles.garantia} />
 
         {/* Depoimentos */}
         <div style={{ marginTop: 18 }}>
@@ -367,17 +347,9 @@ function OfferCard({ offer }) {
       <div style={offersStyles.cardTitle}>{offer.title}</div>
       <div style={offersStyles.cardSubtitle}>{offer.subtitle}</div>
 
-      {/* Imagem do card (9:16) */}
+      {/* ✅ 9:16 (vertical) igual a proporção das imagens dos cards */}
       <div style={offersStyles.cardImageWrap}>
-        <img
-          src={offer.image}
-          alt={offer.title}
-          style={offersStyles.cardImage}
-          onError={(e) => {
-            // se a imagem não existir, não quebra o layout
-            e.currentTarget.style.display = "none";
-          }}
-        />
+        <img src={offer.image} alt={offer.title} style={offersStyles.cardImage} />
       </div>
 
       <div style={offersStyles.priceBox}>
@@ -385,7 +357,6 @@ function OfferCard({ offer }) {
         <div style={offersStyles.newPrice}>Por: {offer.newPrice}</div>
       </div>
 
-      {/* Bullets (sem cortar texto) */}
       {offer.bullets?.length > 0 && (
         <ul style={offersStyles.bullets}>
           {offer.bullets.map((b, i) => (
@@ -410,15 +381,7 @@ function Testimonial({ text, name, role, avatar }) {
   return (
     <div style={offersStyles.testimonial}>
       <div style={offersStyles.testHeader}>
-        <img
-          src={avatar}
-          alt={name}
-          style={offersStyles.avatar}
-          onError={(e) => {
-            // fallback simples
-            e.currentTarget.style.display = "none";
-          }}
-        />
+        <img src={avatar} alt={name} style={offersStyles.avatar} />
         <div>
           <div style={offersStyles.testName}>{name}</div>
           <div style={offersStyles.testRole}>{role}</div>
@@ -432,8 +395,9 @@ function Testimonial({ text, name, role, avatar }) {
 }
 
 /* =========================
-   ESTILOS BASE
+   ESTILOS
 ========================= */
+
 const styles = {
   page: {
     minHeight: "100vh",
@@ -453,8 +417,6 @@ const styles = {
     boxShadow: "0 20px 40px rgba(0,0,0,0.22)",
     padding: "26px 22px",
   },
-
-  // entrada (mockup)
   mockWrap: {
     width: "100%",
     maxWidth: 520,
@@ -468,12 +430,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
   },
-  mockImg: {
-    width: "100%",
-    height: "100%",
-    objectFit: "contain",
-    display: "block",
-  },
+  mockImg: { width: "100%", height: "100%", objectFit: "contain", display: "block" },
 
   title: { fontSize: 22, marginBottom: 10, color: "#0f172a" },
   subtitle: { fontSize: 14, color: "#475569", marginBottom: 14, lineHeight: 1.45 },
@@ -498,13 +455,7 @@ const styles = {
     cursor: "pointer",
   },
 
-  // quiz
-  topRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-  },
+  topRow: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
   stepPill: {
     fontSize: 12,
     fontWeight: 800,
@@ -514,14 +465,7 @@ const styles = {
     borderRadius: 999,
   },
   stepPct: { fontSize: 12, fontWeight: 800, color: "#16a34a" },
-  progressBar: {
-    width: "100%",
-    height: 8,
-    background: "#e2e8f0",
-    borderRadius: 10,
-    overflow: "hidden",
-    marginBottom: 18,
-  },
+  progressBar: { width: "100%", height: 8, background: "#e2e8f0", borderRadius: 10, overflow: "hidden", marginBottom: 18 },
   progressFill: { height: "100%", background: "#16a34a", transition: "width 0.25s ease" },
 
   qTitle: { fontSize: 17, marginBottom: 10, color: "#0f172a", lineHeight: 1.35 },
@@ -546,9 +490,6 @@ const styles = {
   helpText: { fontSize: 12, color: "#94a3b8" },
 };
 
-/* =========================
-   ESTILOS OFERTAS
-========================= */
 const offersStyles = {
   timerWrap: { width: "100%", display: "flex", justifyContent: "center", marginBottom: 12 },
   timerText: {
@@ -560,30 +501,7 @@ const offersStyles = {
     fontWeight: 900,
     letterSpacing: 0.3,
   },
-  timer: {
-    marginLeft: 8,
-    padding: "4px 8px",
-    borderRadius: 999,
-    background: "#16a34a",
-    color: "white",
-    fontWeight: 900,
-  },
-
-  // Topo só planilha
-  heroSoloWrap: {
-    width: "100%",
-    maxWidth: 720,
-    margin: "0 auto",
-    borderRadius: 18,
-    overflow: "hidden",
-    background: "#0b1220",
-    padding: 12,
-    height: 300,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  heroSoloImg: { width: "100%", height: "100%", objectFit: "contain", display: "block" },
+  timer: { marginLeft: 8, padding: "4px 8px", borderRadius: 999, background: "#16a34a", color: "white", fontWeight: 900 },
 
   headerTag: {
     display: "inline-block",
@@ -598,13 +516,17 @@ const offersStyles = {
   headerTitle: { fontSize: 18, fontWeight: 900, color: "#0f172a" },
   headerSub: { marginTop: 8, fontSize: 13, color: "#334155", lineHeight: 1.45 },
 
-  grid: {
-    marginTop: 18,
-    display: "grid",
-    gap: 14,
-    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-    alignItems: "start",
+  planilhaOnlyWrap: {
+    width: "100%",
+    maxWidth: 720,
+    margin: "14px auto 0 auto",
+    borderRadius: 18,
+    overflow: "hidden",
+    background: "transparent",
   },
+  planilhaOnlyImg: { width: "100%", height: "auto", display: "block", borderRadius: 18 },
+
+  grid: { marginTop: 18, display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", alignItems: "start" },
 
   card: {
     position: "relative",
@@ -617,10 +539,7 @@ const offersStyles = {
     display: "flex",
     flexDirection: "column",
   },
-  cardHighlight: {
-    border: "2px solid #7c3aed",
-    boxShadow: "0 14px 30px rgba(124,58,237,0.18)",
-  },
+  cardHighlight: { border: "2px solid #7c3aed", boxShadow: "0 14px 30px rgba(124,58,237,0.18)" },
   popular: {
     position: "absolute",
     top: -10,
@@ -637,7 +556,7 @@ const offersStyles = {
   cardTitle: { fontSize: 16, fontWeight: 900, color: "#0f172a" },
   cardSubtitle: { fontSize: 12, color: "#64748b", marginTop: 4 },
 
-  // ✅ 9:16 (vertical) igual as imagens
+  // ✅ 9:16 (vertical) para ficar proporcional às imagens em pé
   cardImageWrap: {
     width: "100%",
     marginTop: 10,
@@ -649,27 +568,14 @@ const offersStyles = {
     alignItems: "center",
     justifyContent: "center",
   },
-  cardImage: { width: "100%", height: "100%", objectFit: "contain", display: "block" },
+  cardImage: { width: "100%", height: "100%", objectFit: "cover", display: "block" },
 
-  priceBox: {
-    marginTop: 12,
-    borderRadius: 14,
-    padding: 12,
-    background: "#f8fafc",
-    border: "1px solid #e5e7eb",
-  },
+  priceBox: { marginTop: 12, borderRadius: 14, padding: 12, background: "#f8fafc", border: "1px solid #e5e7eb" },
   oldPrice: { fontSize: 12, color: "#6b7280", textDecoration: "line-through" },
   newPrice: { marginTop: 6, fontSize: 20, fontWeight: 900, color: "#0f172a" },
 
   bullets: { listStyle: "none", padding: 0, margin: "12px 0 0 0" },
-  bulletItem: {
-    fontSize: 12,
-    color: "#334155",
-    marginTop: 8,
-    lineHeight: 1.35,
-    whiteSpace: "normal",
-    wordBreak: "break-word",
-  },
+  bulletItem: { fontSize: 12, color: "#334155", marginTop: 8, lineHeight: 1.35, whiteSpace: "normal", wordBreak: "break-word" },
 
   buyBtn: {
     width: "100%",
@@ -688,22 +594,9 @@ const offersStyles = {
 
   h3: { fontSize: 13, letterSpacing: 0.6, margin: "0 0 10px 0", textAlign: "center" },
 
-  testimonial: {
-    border: "1px solid #e5e7eb",
-    background: "#ffffff",
-    borderRadius: 14,
-    padding: 14,
-    marginTop: 10,
-    textAlign: "left",
-  },
+  testimonial: { border: "1px solid #e5e7eb", background: "#ffffff", borderRadius: 14, padding: 14, marginTop: 10, textAlign: "left" },
   testHeader: { display: "flex", alignItems: "center", gap: 10 },
-  avatar: {
-    width: 44,
-    height: 44,
-    borderRadius: "50%",
-    objectFit: "cover",
-    border: "1px solid #e5e7eb",
-  },
+  avatar: { width: 44, height: 44, borderRadius: "50%", objectFit: "cover", border: "1px solid #e5e7eb" },
   testName: { fontWeight: 900, color: "#111827", fontSize: 14, lineHeight: 1.2 },
   testRole: { color: "#64748b", fontSize: 12, marginTop: 2 },
 };
