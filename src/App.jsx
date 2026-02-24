@@ -33,7 +33,11 @@ const questions = [
     options: [
       { text: "Tenho uma noção, mas nada muito organizado", score: 2, emoji: "🙋‍♂️" },
       { text: "Sim, está tudo anotado e bem claro para mim", score: 3, emoji: "😎" },
-      { text: "Sinceramente, não sei… só vou gastando e vejo depois no extrato", score: 1, emoji: "😅" },
+      {
+        text: "Sinceramente, não sei… só vou gastando e vejo depois no extrato",
+        score: 1,
+        emoji: "😅",
+      },
     ],
   },
   {
@@ -41,9 +45,21 @@ const questions = [
       'Quando o mês acaba, você tem a sensação de que o dinheiro simplesmente “sumiu”?',
     description: "Selecione uma das opções:",
     options: [
-      { text: "Sim, no fim do mês quase nunca sei para onde o dinheiro foi.", score: 1, emoji: "😔" },
-      { text: "Não, acompanho tudo e sei exatamente para onde cada gasto foi.", score: 3, emoji: "😏" },
-      { text: "Às vezes tenho essa sensação, mas no geral consigo me virar e fechar o mês.", score: 2, emoji: "🤷‍♂️" },
+      {
+        text: "Sim, no fim do mês quase nunca sei para onde o dinheiro foi.",
+        score: 1,
+        emoji: "😔",
+      },
+      {
+        text: "Não, acompanho tudo e sei exatamente para onde cada gasto foi.",
+        score: 3,
+        emoji: "😏",
+      },
+      {
+        text: "Às vezes tenho essa sensação, mas no geral consigo me virar e fechar o mês.",
+        score: 2,
+        emoji: "🤷‍♂️",
+      },
     ],
   },
   {
@@ -89,7 +105,7 @@ const questions = [
 ];
 
 /* =========================
-   2) OFERTAS (Kiwify links)
+   2) OFERTA ÚNICA (R$19,90)
 ========================= */
 
 const offers = [
@@ -98,43 +114,16 @@ const offers = [
     title: "Planilha Vida Sem Dívidas",
     subtitle: "Acesso vitalício",
     oldPrice: "R$97,00",
-    newPrice: "R$27,00",
-    url: "https://pay.kiwify.com.br/T2t4PBq",
+    newPrice: "R$19,90",
+    url: "https://pay.kiwify.com.br/UXglpsq",
     image: "/card1.png",
     bullets: [
-      "Criada para ajudar você a organizar suas finanças de forma simples, rápida e prática. Controle gastos, acompanhe entradas, metas e pagamentos em um só lugar. Tenha clareza do seu dinheiro, elimine desperdícios e assuma o controle da sua vida financeira começando hoje.",
-    ],
-    highlight: false,
-  },
-  {
-    id: "card2",
-    title: "Planilha Vida Sem Dívidas + Parcelado Nunca Mais",
-    subtitle: "Acesso vitalício",
-    oldPrice: "R$127,00",
-    newPrice: "R$47,00",
-    url: "https://pay.kiwify.com.br/KEpAvGm",
-    image: "/card2.png",
-    bullets: [
-      "Acesso ao sistema Parcelado Nunca Mais: veja quanto do seu dinheiro já está comprometido antes de parcelar qualquer compra.",
-      "Controle parcelas, valores mensais e saiba exatamente quando cada dívida termina.",
-      "Simples, online e fácil de usar — ideal pra quem quer parar de se enrolar no cartão.",
-    ],
-    highlight: false,
-  },
-  {
-    id: "card3",
-    title: "Combo Reestruturação Financeira",
-    subtitle: "Acesso vitalício",
-    oldPrice: "R$497,00",
-    newPrice: "R$97,00",
-    url: "https://pay.kiwify.com.br/eSTSn8r",
-    image: "/card3.png",
-    bullets: [
-      "Suporte prioritário humanizado no whatsapp (pegamos na sua mão e te ajudamos até você ver as coisas acontecendo)",
-      "Planilha Vida Sem Dívidas, criada para ajudar você a organizar suas finanças de forma simples, rápida e prática.",
-      "ANTI-IMPULSO: antes de gastar, pergunte para a IA. Funciona direto pelo ChatGPT e te ajuda a decidir melhor com seu dinheiro.",
-      "MÉTODO S.O.M: um sistema com direção clara para pessoas comuns saírem do caos e começarem a avançar de verdade.",
-      "PARCELADO NUNCA MAIS: veja quanto do seu dinheiro já está comprometido antes de parcelar, controle parcelas e saiba quando termina.",
+      "Acesso vitalício",
+      "Atualização constante",
+      "Vídeo aula ensinando a usar",
+      "Sem mensalidade",
+      "Personalize de acordo as suas necessidades",
+      "Feita para iniciantes e experientes",
     ],
     highlight: true,
   },
@@ -295,7 +284,7 @@ export default function App() {
 }
 
 /* =========================
-   PÁGINA FINAL (OFERTAS)
+   PÁGINA FINAL (OFERTA)
 ========================= */
 
 function OffersPage({ totalScore, maxScore }) {
@@ -318,7 +307,7 @@ function OffersPage({ totalScore, maxScore }) {
         </div>
 
         <div style={{ textAlign: "center", marginTop: 8 }}>
-          <div style={offersStyles.headerTag}>ESCOLHA SUA MELHOR OPÇÃO</div>
+          <div style={offersStyles.headerTag}>OFERTA ESPECIAL</div>
           <div style={offersStyles.headerTitle}>Seu diagnóstico está pronto ✅</div>
           <div style={offersStyles.headerSub}>
             {perfil}
@@ -332,7 +321,7 @@ function OffersPage({ totalScore, maxScore }) {
           <img src="/planilha.png" alt="Planilha" style={offersStyles.planilhaOnlyImg} />
         </div>
 
-        <div style={offersStyles.grid}>
+        <div style={{ ...offersStyles.grid, gridTemplateColumns: "1fr", maxWidth: 420, marginLeft: "auto", marginRight: "auto" }}>
           {offers.map((o, idx) => (
             <OfferCard key={idx} offer={o} />
           ))}
@@ -358,7 +347,7 @@ function OfferCard({ offer }) {
 
   return (
     <div style={cardStyle}>
-      {offer.highlight && <div style={offersStyles.popular}>MAIS POPULAR</div>}
+      {offer.highlight && <div style={offersStyles.popular}>MAIS VENDIDO</div>}
 
       <div style={offersStyles.cardTitle}>{offer.title}</div>
       <div style={offersStyles.cardSubtitle}>{offer.subtitle}</div>
@@ -385,7 +374,6 @@ function OfferCard({ offer }) {
       <button
         style={offersStyles.buyBtn}
         onClick={() => {
-          // evento de clique (antes do redirect)
           utmifyTrack("offer_click", { offerId: offer.id, offerTitle: offer.title });
 
           // ✅ repassa TODOS os params (utm_*, fbclid, gclid, etc)
@@ -485,7 +473,12 @@ const styles = {
     cursor: "pointer",
   },
 
-  topRow: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
+  topRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
   stepPill: {
     fontSize: 12,
     fontWeight: 800,
@@ -495,7 +488,14 @@ const styles = {
     borderRadius: 999,
   },
   stepPct: { fontSize: 12, fontWeight: 800, color: "#16a34a" },
-  progressBar: { width: "100%", height: 8, background: "#e2e8f0", borderRadius: 10, overflow: "hidden", marginBottom: 18 },
+  progressBar: {
+    width: "100%",
+    height: 8,
+    background: "#e2e8f0",
+    borderRadius: 10,
+    overflow: "hidden",
+    marginBottom: 18,
+  },
   progressFill: { height: "100%", background: "#16a34a", transition: "width 0.25s ease" },
 
   qTitle: { fontSize: 17, marginBottom: 10, color: "#0f172a", lineHeight: 1.35 },
@@ -531,7 +531,14 @@ const offersStyles = {
     fontWeight: 900,
     letterSpacing: 0.3,
   },
-  timer: { marginLeft: 8, padding: "4px 8px", borderRadius: 999, background: "#16a34a", color: "white", fontWeight: 900 },
+  timer: {
+    marginLeft: 8,
+    padding: "4px 8px",
+    borderRadius: 999,
+    background: "#16a34a",
+    color: "white",
+    fontWeight: 900,
+  },
 
   headerTag: {
     display: "inline-block",
@@ -556,7 +563,13 @@ const offersStyles = {
   },
   planilhaOnlyImg: { width: "100%", height: "auto", display: "block", borderRadius: 18 },
 
-  grid: { marginTop: 18, display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", alignItems: "start" },
+  grid: {
+    marginTop: 18,
+    display: "grid",
+    gap: 14,
+    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+    alignItems: "start",
+  },
 
   card: {
     position: "relative",
@@ -599,12 +612,25 @@ const offersStyles = {
   },
   cardImage: { width: "100%", height: "100%", objectFit: "cover", display: "block" },
 
-  priceBox: { marginTop: 12, borderRadius: 14, padding: 12, background: "#f8fafc", border: "1px solid #e5e7eb" },
+  priceBox: {
+    marginTop: 12,
+    borderRadius: 14,
+    padding: 12,
+    background: "#f8fafc",
+    border: "1px solid #e5e7eb",
+  },
   oldPrice: { fontSize: 12, color: "#6b7280", textDecoration: "line-through" },
   newPrice: { marginTop: 6, fontSize: 20, fontWeight: 900, color: "#0f172a" },
 
   bullets: { listStyle: "none", padding: 0, margin: "12px 0 0 0" },
-  bulletItem: { fontSize: 12, color: "#334155", marginTop: 8, lineHeight: 1.35, whiteSpace: "normal", wordBreak: "break-word" },
+  bulletItem: {
+    fontSize: 12,
+    color: "#334155",
+    marginTop: 8,
+    lineHeight: 1.35,
+    whiteSpace: "normal",
+    wordBreak: "break-word",
+  },
 
   buyBtn: {
     width: "100%",
@@ -623,7 +649,14 @@ const offersStyles = {
 
   h3: { fontSize: 13, letterSpacing: 0.6, margin: "0 0 10px 0", textAlign: "center" },
 
-  testimonial: { border: "1px solid #e5e7eb", background: "#ffffff", borderRadius: 14, padding: 14, marginTop: 10, textAlign: "left" },
+  testimonial: {
+    border: "1px solid #e5e7eb",
+    background: "#ffffff",
+    borderRadius: 14,
+    padding: 14,
+    marginTop: 10,
+    textAlign: "left",
+  },
   testHeader: { display: "flex", alignItems: "center", gap: 10 },
   avatar: { width: 44, height: 44, borderRadius: "50%", objectFit: "cover", border: "1px solid #e5e7eb" },
   testName: { fontWeight: 900, color: "#111827", fontSize: 14, lineHeight: 1.2 },
