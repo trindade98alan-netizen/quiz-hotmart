@@ -1,12 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 /* =========================
-   CHECKOUT URL ÚNICA
-========================= */
-
-const CHECKOUT_URL = "https://pay.hotmart.com/X104304638O?checkoutMode=10";
-
-/* =========================
    UTMIFY EVENTS (helpers)
 ========================= */
 
@@ -156,7 +150,7 @@ const mainOffer = {
   subtitle: "Acceso de por vida",
   oldPrice: "$49.75",
   newPrice: "$9.75",
-  url: CHECKOUT_URL,
+  url: "https://pay.hotmart.com/X104304638O?checkoutMode=10",
   image: "/card1-gringa.png",
   bullets: [
     "Acceso de por vida",
@@ -176,7 +170,7 @@ const exitOffer = {
   newPrice: "$6.75",
   coupon: "OPORTUNIDADE",
   discountValue: "$3.00",
-  url: CHECKOUT_URL,
+  url: "https://pay.hotmart.com/X104304638O?checkoutMode=10",
   image: "/card1-gringa.png",
 };
 
@@ -248,13 +242,15 @@ function redirectToCheckout(offer, eventName = "cta_click") {
     offerTitle: offer.title,
   });
 
+  const CHECKOUT_URL = "https://pay.hotmart.com/X104304638O?checkoutMode=10";
+
   const currentParams = new URLSearchParams(window.location.search);
   const paramsString = currentParams.toString();
 
-  let finalUrl = offer.url;
+  let finalUrl = CHECKOUT_URL;
 
   if (paramsString) {
-    finalUrl += (finalUrl.includes("?") ? "&" : "?") + paramsString;
+    finalUrl += "&" + paramsString;
   }
 
   window.location.href = finalUrl;
